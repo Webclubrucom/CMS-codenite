@@ -11,6 +11,7 @@ readonly class Response
         private int $statusCode = 200,
         private array $headers = []
     ) {
+        http_response_code($this->statusCode);
     }
 
     public function send(): void
