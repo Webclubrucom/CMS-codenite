@@ -41,7 +41,7 @@ class Router implements RouterInterface
     private function extractRouteInfo(Request $request): array
     {
         $dispatcher = simpleDispatcher(function (RouteCollector $collector) {
-            $routes = require_once BASE_DIR.'/system/routes.php';
+            $routes = require_once BASE_DIR.'/application/routes.php';
             foreach ($routes as $route) {
                 $collector->addRoute(...$route);
             }
@@ -60,7 +60,7 @@ class Router implements RouterInterface
                 $e->setStatusCode(405);
                 throw $e;
             default:
-                $e = new RouteNotFoundException('Класс не найден');
+                $e = new RouteNotFoundException('Страница не найдена');
                 $e->setStatusCode(404);
                 throw $e;
         }
@@ -68,8 +68,54 @@ class Router implements RouterInterface
 
     private function searchController($controller): string
     {
-        define('MODULE', str_replace('Controller', '', $controller));
+        $classes = $this->globClasses(BASE_DIR.'/application');
 
-        return sprintf('\\Application\\Modules\\%s\\Controllers\\%s', MODULE, $controller);
+        return array_search($controller, $classes);
+    }
+
+    private function globClasses(string $path): array
+    {
+        $out = [];
+        foreach (glob($path.'/*') as $file) {
+
+            if (is_dir($file)) {
+                $out = array_merge($out, $this->globClasses($file));
+            } else {
+                if ($this->getExtension($file) === 'php') {
+                    $nsClass = $this->convertingStringClass($file);
+                    $out[$nsClass] = basename($nsClass);
+                }
+            }
+        }
+
+        return $out;
+    }
+
+    private function convertingStringClass($file): array|string
+    {
+        $nsClass = substr($file, 0, strrpos($file, '.'));
+        $nsClass = str_replace(BASE_DIR, '', $nsClass);
+        $str = $this->getStringBetween($nsClass);
+        $nsClass = str_replace($str, ucfirst($str), $nsClass);
+
+        return str_replace('/', '\\', $nsClass);
+    }
+
+    private function getExtension($filename): string
+    {
+        return substr(strrchr($filename, '.'), 1);
+    }
+
+    private function getStringBetween($string): string
+    {
+        $string = ' '.$string;
+        $ini = strpos($string, '/');
+        if ($ini == 0) {
+            return '';
+        }
+        $ini += strlen('/');
+        $len = strpos($string, '/', $ini) - $ini;
+
+        return substr($string, $ini, $len);
     }
 }

@@ -1,7 +1,7 @@
 <main class="form-signin w-100 m-auto">
     <form class="text-center">
         <img class="mb-4" src="/application/themes/backend/default/assets/img/logo.webp" alt="">
-        <h1 class="h3 mb-3 fw-normal text-center"><?= $title ?></h1>
+        <h1 class="h3 mb-3 fw-normal text-center"></h1>
 
         <div class="form-floating">
             <input type="email" name="email" class="form-control" id="email" placeholder="name@example.com">
