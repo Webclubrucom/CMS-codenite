@@ -2,13 +2,18 @@
 
 declare(strict_types=1);
 
+use Symfony\Component\Dotenv\Dotenv;
+
 define('BASE_DIR', dirname(__DIR__));
-const MODULES_DIR = BASE_DIR.'/application/Modules';
 
 require_once BASE_DIR.'/vendor/autoload.php';
 
-$container = require_once BASE_DIR.'/application/config/services.php';
-$kernel = $container->get('Kernel');
+$dotenv = new Dotenv();
+$dotenv->load(BASE_DIR . '/application/config/.env');
 
-$kernel->handle()->send();
+
+$container = require_once BASE_DIR . '/application/config/container.php';
+
+$kernel = $container->get('Kernel');
+$kernel->handle();
 
