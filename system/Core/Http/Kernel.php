@@ -10,15 +10,18 @@ use Throwable;
 
 readonly class Kernel
 {
+    private Request $request;
+
     public function __construct(
         private RouterInterface $router
     ) {
+        $this->request = Request::createFromGlobals();
     }
 
-    public function handle(Request $request)
+    public function handle()
     {
         try {
-            [$routeHandler, $vars] = $this->router->dispatch($request);
+            [$routeHandler, $vars] = $this->router->dispatch($this->request);
             $response = call_user_func_array($routeHandler, $vars);
         } catch (HttpException $e) {
             $response = new Response($e->getMessage(), $e->getStatusCode());

@@ -1,6 +1,6 @@
 <?php
 
-use System\Core\Router\Route;
+use System\Core\Router\Facades\Route;
 
 return [
     Route::get('/', 'LoginController@index'),

@@ -16,6 +16,8 @@ use function FastRoute\simpleDispatcher;
 
 class Router implements RouterInterface
 {
+    private array $routes;
+
     /**
      * @throws RouteNotFoundException
      * @throws MethodNotAllowedException
@@ -34,6 +36,11 @@ class Router implements RouterInterface
         return [$handler, $vars];
     }
 
+    public function registerRoutes(array $routes): void
+    {
+        $this->routes = $routes;
+    }
+
     /**
      * @throws RouteNotFoundException
      * @throws MethodNotAllowedException
@@ -41,8 +48,7 @@ class Router implements RouterInterface
     private function extractRouteInfo(Request $request): array
     {
         $dispatcher = simpleDispatcher(function (RouteCollector $collector) {
-            $routes = require_once BASE_DIR.'/application/routes.php';
-            foreach ($routes as $route) {
+            foreach ($this->routes as $route) {
                 $collector->addRoute(...$route);
             }
         });
