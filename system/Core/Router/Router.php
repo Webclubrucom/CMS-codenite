@@ -4,11 +4,16 @@ declare(strict_types=1);
 
 namespace System\Core\Router;
 
+use Exception;
 use FastRoute\Dispatcher;
 use FastRoute\RouteCollector;
+use League\Container\Container;
 use Override;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
 use System\Core\Exceptions\MethodNotAllowedException;
 use System\Core\Exceptions\RouteNotFoundException;
+use System\Core\Helpers\Config;
 use System\Core\Http\Request;
 use System\Core\Router\Interfaces\RouterInterface;
 
@@ -19,18 +24,21 @@ class Router implements RouterInterface
     private array $routes;
 
     /**
+     * @throws NotFoundExceptionInterface
+     * @throws ContainerExceptionInterface
      * @throws RouteNotFoundException
      * @throws MethodNotAllowedException
      */
     #[Override]
-    public function dispatch(Request $request): array
+    public function dispatch(Request $request, Container $container): array
     {
         [$handler, $vars] = $this->extractRouteInfo($request);
 
         if (is_string($handler)) {
-            [$controller, $method] = explode('@', $handler, 2);
-            $controller = $this->searchController($controller);
-            $handler = [new $controller, $method];
+            [$controllerId, $method] = explode('@', $handler, 2);
+            $controllerId = $this->searchController($controllerId);
+            $controller = $container->get($controllerId);
+            $handler = [$controller, $method];
         }
 
         return [$handler, $vars];
@@ -44,6 +52,7 @@ class Router implements RouterInterface
     /**
      * @throws RouteNotFoundException
      * @throws MethodNotAllowedException
+     * @throws Exception
      */
     private function extractRouteInfo(Request $request): array
     {
@@ -59,6 +68,7 @@ class Router implements RouterInterface
         );
         switch ($infoRoute[0]) {
             case Dispatcher::FOUND:
+
                 return [$infoRoute[1], $infoRoute[2]];
             case Dispatcher::METHOD_NOT_ALLOWED:
                 $allowedMethod = implode(',', $infoRoute[1]);
@@ -66,13 +76,23 @@ class Router implements RouterInterface
                 $e->setStatusCode(405);
                 throw $e;
             default:
+                if (Config::get('APP_ENV') == 'local') {
+                    throw new Exception('Страница не найдена');
+                }
+                if ($this->searchController('ErrorController')) {
+                    $infoRoute[1] = 'ErrorController@page404';
+                    $infoRoute[2] = [];
+
+                    return [$infoRoute[1], $infoRoute[2]];
+                }
+
                 $e = new RouteNotFoundException('Страница не найдена');
                 $e->setStatusCode(404);
                 throw $e;
         }
     }
 
-    private function searchController($controller): string
+    private function searchController($controller): false|int|string
     {
         $classes = $this->globClasses(BASE_DIR.'/application');
 

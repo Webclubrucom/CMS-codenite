@@ -8,8 +8,8 @@ class ErrorController
 {
     public function page404(): Response
     {
-        $content = 'Страница не найдена';
+        $content = 'Страница не найдена 404';
 
-        return new Response($content);
+        return new Response($content, 404);
     }
 }

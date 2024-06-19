@@ -2,9 +2,11 @@
 
 namespace Application\Modules\Login\Controllers;
 
+use System\Abstracts\AbstractController;
 use System\Core\Http\Response;
+use Twig\Environment;
 
-final class LoginController
+final class LoginController extends AbstractController
 {
     public function index(): Response
     {

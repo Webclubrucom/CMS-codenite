@@ -12,8 +12,7 @@ readonly class Request
         private array $cookies,
         private array $files,
         private array $server
-    ) {
-    }
+    ) {}
 
     public static function createFromGlobals(): static
     {
