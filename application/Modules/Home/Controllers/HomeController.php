@@ -4,21 +4,17 @@ declare(strict_types=1);
 
 namespace Application\Modules\Home\Controllers;
 
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
-use System\Abstracts\AbstractController;
-use System\Core\Http\Response;
+use System\Abstracts\AbstractHandler;
 
-class HomeController extends AbstractController
+class HomeController extends AbstractHandler
 {
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
-    public function index(): Response
+
+    public function index()
     {
         $data = ['int' => '123456789'];
 
-        return $this->render('/Home/templates/home', $data);
+        return $this->render('Modules/Home/templates/home', $data);
+
+
     }
 }

@@ -2,23 +2,22 @@
 
 namespace Application\Modules\Login\Controllers;
 
-use System\Abstracts\AbstractController;
-use System\Core\Http\Response;
-use Twig\Environment;
+use Psr\Container\ContainerExceptionInterface;
+use Psr\Container\NotFoundExceptionInterface;
+use System\Abstracts\AbstractHandler;
 
-final class LoginController extends AbstractController
+final class LoginController extends AbstractHandler
 {
-    public function index(): Response
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    public function index()
     {
-        $content = 'Авторизация';
 
-        return new Response($content);
+        $data = ['int' => '123456789'];
+
+        return $this->render('Modules/Login/Views/login', $data);
     }
 
-    public function show(int $id): Response
-    {
-        $content = 'DDDDD - '.$id;
-
-        return new Response($content);
-    }
 }
