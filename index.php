@@ -12,4 +12,4 @@ error_reporting(E_ALL | E_NOTICE);
 $container = require_once BASE_DIR.'/application/config/container.php';
 $app = $container->get('app');
 
-$app->handleRequest();
+$app->handle();

@@ -1,0 +1,14 @@
+#!/usr/bin/env php
+<?php
+
+const BASE_DIR = __DIR__;
+
+require_once BASE_DIR.'/vendor/autoload.php';
+
+use System\Console\Console;
+
+$console = new Console();
+
+$console->run();
+
+

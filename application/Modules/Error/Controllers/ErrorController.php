@@ -1,15 +1,12 @@
 <?php
 
-namespace application\Modules\Error\Controllers;
+declare(strict_types=1);
 
-use System\Core\Http\Response;
+namespace Application\Modules\Error\Controllers;
 
-class ErrorController
+use System\Abstracts\AbstractHandler;
+
+final class ErrorController extends AbstractHandler
 {
-    public function page404(): Response
-    {
-        $content = 'Страница не найдена 404';
 
-        return new Response($content, 404);
-    }
 }

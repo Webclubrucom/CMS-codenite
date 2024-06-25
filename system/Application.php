@@ -20,8 +20,9 @@ class Application
         $this->request = Request::createFromGlobals();
     }
 
-    public function handleRequest(): void
+    public function handle(): void
     {
+        dd($this->container->get('db')->connect());
         $params = $this->router->match($this->request->getPathInfo());
 
         $controller = $this->container->get($params['handler']);
