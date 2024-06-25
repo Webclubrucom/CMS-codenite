@@ -1,7 +1,7 @@
 .idea
 .osp
 composer.phar
-/vendor/
+/vendor
 README.md
 application/config/.env
 
