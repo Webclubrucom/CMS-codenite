@@ -14,7 +14,5 @@ class HomeController extends AbstractHandler
         $data = ['int' => '123456789'];
 
         return $this->render('Modules/Home/templates/home', $data);
-
-
     }
 }

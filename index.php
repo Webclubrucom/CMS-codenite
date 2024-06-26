@@ -13,8 +13,6 @@ if (Config::get('APP_ENV') == 'local') {
     error_reporting(E_ALL | E_NOTICE);
 }
 
-
-
 $container = require_once BASE_DIR.'/application/config/containers/container.php';
 $app = $container->get('app');
 

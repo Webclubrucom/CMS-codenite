@@ -42,8 +42,6 @@ class CheckRoute
                 mkdir(BASE_DIR.Config::get('PATH_CACHE'), 0777, true);
             }
             file_put_contents($routes, $file_content, FILE_APPEND | LOCK_EX);
-
         }
-
     }
 }

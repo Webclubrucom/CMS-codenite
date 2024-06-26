@@ -4,25 +4,51 @@ declare(strict_types=1);
 
 namespace System\Core\Router;
 
+use Exception;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
+use System\Core\Exceptions\RouteNotFoundException;
+use System\Core\Helpers\Config;
 use System\Core\Router\Interfaces\RouterInterface;
 
 class Router implements RouterInterface
 {
     private RouteCollection $routeCollection;
 
+    private Response $response;
+
     public function __construct(CheckRoute $routes)
     {
+        $this->response = new Response();
         $routes = require_once $routes->routes;
         $this->routeCollection = new RouteCollection();
         $this->initRoutes($routes);
     }
 
+    /**
+     * @throws RouteNotFoundException
+     * @throws Exception
+     */
     public function match(string $route): array
     {
+        if (! $this->routeCollection->get($route)) {
+            $handler = $this->searchHandler('Error');
+            if ($handler) {
+                $errorRoute = new Route($route, ['handler' => $handler, 'action' => 'index'], methods: 'GET');
+                $this->routeCollection->add($route, $errorRoute);
+            } else {
+                if (Config::get('APP_ENV') == 'local') {
+                    throw new RouteNotFoundException('Route not found!');
+                } else {
+                    $this->response->setContent('404 Страница не найдена!')->setStatusCode(Response::HTTP_NOT_FOUND)->send();
+                    exit();
+                }
+            }
+        }
+
         $context = new RequestContext();
         $matcher = new UrlMatcher($this->routeCollection, $context);
 
