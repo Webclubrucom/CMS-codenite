@@ -5,10 +5,9 @@ const BASE_DIR = __DIR__;
 
 require_once BASE_DIR.'/vendor/autoload.php';
 
-use System\Console\Console;
+$container = require_once BASE_DIR.'/application/config/console.php';
 
-$console = new Console();
-
+$console = $container->get('console');
 $console->run();
 
 

@@ -5,18 +5,22 @@ declare(strict_types=1);
 namespace System\Console;
 
 use DirectoryIterator;
+use League\Container\Container;
 use ReflectionException;
 use Symfony\Component\Console\Application;
 
 class Console extends Application
 {
+    private Container $container;
+
     /**
      * @throws ReflectionException
      */
     public function __construct(
-        string $name = 'UNKNOWN', string $version = 'UNKNOWN'
+        Container $container, string $name = 'UNKNOWN', string $version = 'UNKNOWN'
     ) {
         parent::__construct($name, $version);
+        $this->container = $container;
         $this->registerCommands();
     }
 
@@ -25,7 +29,6 @@ class Console extends Application
      */
     private function registerCommands(): void
     {
-
         $commandFilesPath = __DIR__.'\Commands';
         $namespace = 'System\\Console\\Commands\\';
 
@@ -33,10 +36,10 @@ class Console extends Application
             if (! $commandFile->isFile()) {
                 continue;
             }
+
             $command = $namespace.$commandFile->getBasename('.php');
-            $this->add(new $command());
+            $command = $this->container->get($command);
+            $this->add($command);
         }
-
     }
-
 }

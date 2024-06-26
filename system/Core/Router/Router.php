@@ -14,8 +14,9 @@ class Router implements RouterInterface
 {
     private RouteCollection $routeCollection;
 
-    public function __construct(array $routes)
+    public function __construct(CheckRoute $routes)
     {
+        $routes = require_once $routes->routes;
         $this->routeCollection = new RouteCollection();
         $this->initRoutes($routes);
     }
@@ -31,7 +32,6 @@ class Router implements RouterInterface
     private function initRoutes($routes): void
     {
         foreach ($routes as $itemRoute) {
-
             $routeData = explode('@', $itemRoute[2], 2);
             $path = $itemRoute[1];
             $handler = $this->searchHandler($routeData[0]);

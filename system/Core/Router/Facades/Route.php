@@ -15,4 +15,40 @@ class Route
     {
         return ['POST', $uri, $handler];
     }
+
+    public static function put(string $uri, string|callable $handler): array
+    {
+        return ['PUT', $uri, $handler];
+    }
+
+    public static function delete(string $uri, string|callable $handler): array
+    {
+        return ['DELETE', $uri, $handler];
+    }
+
+    public static function search(string $uri, string|callable $handler): array
+    {
+        return ['SEARCH', $uri, $handler];
+    }
+
+    public static function head(string $uri, string|callable $handler): array
+    {
+        return ['HEAD', $uri, $handler];
+    }
+
+    public static function patch(string $uri, string|callable $handler): array
+    {
+        return ['PATCH', $uri, $handler];
+    }
+
+    public static function options(string $uri, string|callable $handler): array
+    {
+        return ['OPTIONS', $uri, $handler];
+    }
+
+    public static function connect(string $uri, string|callable $handler): array
+    {
+        return ['CONNECT', $uri, $handler];
+    }
+
 }
