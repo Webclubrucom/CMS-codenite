@@ -15,7 +15,7 @@ if (Config::get('APP_ENV') == 'local') {
 
 
 
-$container = require_once BASE_DIR.'/application/config/container.php';
+$container = require_once BASE_DIR.'/application/config/containers/container.php';
 $app = $container->get('app');
 
 $app->handle();
