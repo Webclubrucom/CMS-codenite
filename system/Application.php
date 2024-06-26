@@ -25,10 +25,10 @@ class Application
         $params = $this->router->match($this->request->getPathInfo());
 
         $controller = $this->container->get($params['handler']);
-
         $action = $params['action'];
         $content = $controller->$action();
 
-        $this->response->setContent($content)->setStatusCode(Response::HTTP_OK)->send();
+        $statusCode = $this->response->getStatusCode();
+        $this->response->setContent($content)->setStatusCode($statusCode)->send();
     }
 }

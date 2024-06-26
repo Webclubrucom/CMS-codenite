@@ -8,6 +8,7 @@ use League\Container\Container;
 use League\Container\ReflectionContainer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\RouteCollection;
 use System\Abstracts\AbstractHandler;
 use System\Application;
 use System\Core\Database\Connection;
@@ -26,9 +27,11 @@ $container = new Container();
 $container->defaultToShared(true);
 $container->delegate(new ReflectionContainer(true));
 
-$container->add('app', Application::class)->addArgument(RouterInterface::class)->addArgument(Request::class)->addArgument(Response::class)->addArgument($container);
+$container->add('response', Response::class);
+
+$container->add('app', Application::class)->addArgument(RouterInterface::class)->addArgument(Request::class)->addArgument('response')->addArgument($container);
 $container->add(CheckRoute::class)->addArgument($pathRoutes);
-$container->add(RouterInterface::class, Router::class)->addArgument(CheckRoute::class);
+$container->add(RouterInterface::class, Router::class)->addArgument(CheckRoute::class)->addArgument('response')->addArgument(RouteCollection::class);
 
 $container->addShared('twig-loader', FilesystemLoader::class)->addArgument(new StringArgument($pathViews));
 $container->addShared('twig', Environment::class)->addArguments(['twig-loader', $pathCacheViews]);
