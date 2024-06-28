@@ -6,10 +6,11 @@ use Doctrine\DBAL\Connection as Dbal;
 use League\Container\Argument\Literal\StringArgument;
 use League\Container\Container;
 use League\Container\ReflectionContainer;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouteCollection;
-use System\Abstracts\AbstractHandler;
+use System\Abstracts\AbstractController;
 use System\Application;
 use System\Core\Database\Connection;
 use System\Core\Helpers\Config;
@@ -35,7 +36,7 @@ $container->add(RouterInterface::class, Router::class)->addArgument(CheckRoute::
 
 $container->addShared('twig-loader', FilesystemLoader::class)->addArgument(new StringArgument($pathViews));
 $container->addShared('twig', Environment::class)->addArguments(['twig-loader', $pathCacheViews]);
-$container->inflector(AbstractHandler::class)->invokeMethod('setContainer', [$container]);
+$container->inflector(AbstractController::class)->invokeMethod('setContainer', [$container]);
 
 $container->add('connection', Connection::class);
 $container->addShared('db', concrete: function () use ($container): Dbal {

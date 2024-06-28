@@ -2,22 +2,24 @@
 
 namespace Application\Modules\Login\Controllers;
 
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
-use System\Abstracts\AbstractHandler;
+use System\Abstracts\AbstractController;
 
-final class LoginController extends AbstractHandler
+final class LoginController extends AbstractController
 {
-    /**
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
-     */
     public function index()
     {
 
         $data = ['int' => '123456789'];
 
-        return $this->render('Modules/Login/Views/login', $data);
+        return $this->render('Modules/Login/templates/login', $data);
     }
+
+    public function auth()
+    {
+
+        dd('Форма отправлена');
+    }
+
+
 
 }

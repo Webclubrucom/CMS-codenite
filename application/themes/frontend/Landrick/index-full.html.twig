@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block head %}
+        {% include '/themes/frontend/Landrick/components/head.html.twig' %}
+    {% endblock %}
+</head>
+<body>
+    {% include '/themes/frontend/Landrick/components/preloader.html.twig' %}
+
+    {% block content %} {% endblock %}
+
+    {% include '/themes/frontend/Landrick/components/cookie.html.twig' %}
+
+    {% block scripts %}
+        {% include '/themes/frontend/Landrick/components/scripts.html.twig' %}
+    {% endblock %}
+</body>
+</html>

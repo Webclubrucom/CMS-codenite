@@ -35,7 +35,6 @@ class Router implements RouterInterface
      */
     public function match(string $route): array
     {
-
         if (! $this->routeCollection->get($route)) {
             $handler = SearchClass::get('Error');
             if (Config::get('APP_ENV') == 'local') {

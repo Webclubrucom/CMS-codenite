@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Application\Modules\Home\Controllers;
 
-use System\Abstracts\AbstractHandler;
+use System\Abstracts\AbstractController;
 
-class HomeController extends AbstractHandler
+class HomeController extends AbstractController
 {
 
     public function index()

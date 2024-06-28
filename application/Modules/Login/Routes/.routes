@@ -1,0 +1,2 @@
+Route::get('/login', 'LoginController@index');
+Route::post('/login/auth', 'LoginController@auth');

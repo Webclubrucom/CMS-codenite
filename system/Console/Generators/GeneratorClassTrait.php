@@ -15,8 +15,8 @@ trait GeneratorClassTrait
     private string $namespace = 'namespace Application';
 
     private array $types = [
-        'Controller' => 'System\\Abstracts\\AbstractHandler',
-        'Handler' => 'System\\Abstracts\\AbstractHandler',
+        'Controller' => 'System\\Abstracts\\AbstractController',
+        'Handler' => 'System\\Abstracts\\AbstractController',
         'Service' => 'System\\Abstracts\\AbstractService',
         'Model' => 'System\\Abstracts\\AbstractModel',
         'Event' => 'System\\Abstracts\\AbstractEvent',
@@ -28,8 +28,8 @@ trait GeneratorClassTrait
     ];
 
     private array $intersect = [
-        'Controller' => 'System\\Abstracts\\AbstractHandler',
-        'Handler' => 'System\\Abstracts\\AbstractHandler',
+        'Controller' => 'System\\Abstracts\\AbstractController',
+        'Handler' => 'System\\Abstracts\\AbstractController',
         'Service' => 'System\\Abstracts\\AbstractService',
         'Model' => 'System\\Abstracts\\AbstractModel',
     ];

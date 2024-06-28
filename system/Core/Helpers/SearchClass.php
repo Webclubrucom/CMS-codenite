@@ -6,24 +6,48 @@ namespace System\Core\Helpers;
 
 class SearchClass
 {
+    const string PATH_CLASSES = BASE_DIR.'/system/cache/classes.php';
     public static function get($handler): false|int|string
     {
-        $classes = self::globClasses(BASE_DIR.'/application');
+        if (! is_file(self::PATH_CLASSES)) {
+            self::createFileClasses();
+        }
+
+        $classes = include self::PATH_CLASSES;
 
         return array_search($handler, $classes);
+    }
+
+    private static function createFileClasses(): void
+    {
+        $file_content_start = '<?php'.PHP_EOL.PHP_EOL.'return ';
+        $file_content_end = ';';
+        $arrClasses = self::globClasses(BASE_DIR.'/application');
+        $textArray = var_export($arrClasses, true);
+        $textArray = str_replace('\\\\', '\\', $textArray);
+
+        $fileRoutes = $file_content_start;
+        $fileRoutes .= $textArray;
+        $fileRoutes .= $file_content_end;
+
+        if (! is_dir(BASE_DIR.Config::get('PATH_CACHE'))) {
+            mkdir(BASE_DIR.Config::get('PATH_CACHE'), 0777, true);
+        }
+        file_put_contents(self::PATH_CLASSES, $fileRoutes, FILE_APPEND | LOCK_EX);
     }
 
     private static function globClasses(string $path): array
     {
         $out = [];
         foreach (glob($path.'/*') as $file) {
-
             if (is_dir($file)) {
                 $out = array_merge($out, self::globClasses($file));
             } else {
                 if (self::getExtension($file) === 'php') {
                     $nsClass = self::convertingStringClass($file);
-                    $out[$nsClass] = basename($nsClass);
+                    if (class_exists($nsClass)) {
+                        $out[$nsClass] = basename($nsClass);
+                    }
                 }
             }
         }

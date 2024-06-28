@@ -6,6 +6,7 @@ namespace System\Core\Database;
 
 use Doctrine\DBAL\Connection as Dbal;
 use Doctrine\DBAL\DriverManager;
+use Doctrine\DBAL\Exception;
 use System\Core\Helpers\Config;
 
 class Connection
@@ -26,6 +27,9 @@ class Connection
 
     }
 
+    /**
+     * @throws Exception
+     */
     public function create(): Dbal
     {
         return DriverManager::getConnection($this->connectionParams);
