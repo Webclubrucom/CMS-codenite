@@ -22,8 +22,7 @@ class Application
 
     public function handle(): void
     {
-
-        $params = $this->router->match($this->request->getPathInfo());
+        $params = $this->router->match($this->request->getPathInfo(), $this->request->getMethod());
 
         $controller = $this->container->get($params['handler']);
         $action = $params['action'];

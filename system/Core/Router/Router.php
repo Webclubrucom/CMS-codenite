@@ -33,8 +33,9 @@ class Router implements RouterInterface
      * @throws RouteNotFoundException
      * @throws Exception
      */
-    public function match(string $route): array
+    public function match(string $route, string|array $method): array
     {
+
         if (! $this->routeCollection->get($route)) {
             $handler = SearchClass::get('Error');
             if (Config::get('APP_ENV') == 'local') {
@@ -50,7 +51,7 @@ class Router implements RouterInterface
             }
         }
 
-        $context = new RequestContext();
+        $context = new RequestContext(method:$method);
         $matcher = new UrlMatcher($this->routeCollection, $context);
 
         return $matcher->match($route);
@@ -63,9 +64,10 @@ class Router implements RouterInterface
             $path = $itemRoute[1];
             $handler = SearchClass::get($routeData[0]);
             $action = $routeData[1];
-            $method = $itemRoute[0];
+            $method = [$itemRoute[0]];
 
             $route = new Route($path, ['handler' => $handler, 'action' => $action], methods: $method);
+
             $this->routeCollection->add($path, $route);
         }
     }

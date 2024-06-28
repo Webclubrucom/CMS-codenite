@@ -6,5 +6,5 @@ namespace System\Core\Router\Interfaces;
 
 interface RouterInterface
 {
-    public function match(string $route): array;
+    public function match(string $route, string|array $method): array;
 }
