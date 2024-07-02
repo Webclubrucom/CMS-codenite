@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace System\Core\Router\Facades;
+namespace System\Core\Helpers;
 
 class Route
 {

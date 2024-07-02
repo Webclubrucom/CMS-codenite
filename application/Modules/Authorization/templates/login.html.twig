@@ -11,6 +11,20 @@
                                 <img src="/application/themes/frontend/Landrick/assets/images/logo-icon.png" class="avatar avatar-small mb-4 d-block mx-auto" alt="">
                             </a>
                             <h5 class="mb-3 text-center">Пожалуйста, авторизуйтесь</h5>
+                            {% if session().hasFlash('error') %}
+                                {% for message in session().getFlash('error') %}
+                                    <div class="alert alert-outline-danger alert-dismissible" role="alert">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                            {% if session().hasFlash('warning') %}
+                                {% for message in session().getFlash('warning') %}
+                                    <div class="alert alert-outline-warning alert-dismissible" role="alert">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
 
                             <div class="form-floating mb-2">
                                 <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
@@ -37,7 +51,7 @@
 
                             <div class="col-12 text-center mt-3">
                                 <p class="mb-0 mt-3"><small class="text-dark me-2">Нет аккаунта ?</small>
-                                    <a href="#" class="text-dark fw-bold">Регистрация</a>
+                                    <a href="/register" class="text-dark fw-bold">Регистрация</a>
                                 </p>
                             </div>
 

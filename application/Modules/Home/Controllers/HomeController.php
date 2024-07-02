@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Modules\Home\Controllers;
 
-use System\Abstracts\AbstractController;
+use System\Core\Abstracts\AbstractController;
 
 class HomeController extends AbstractController
 {

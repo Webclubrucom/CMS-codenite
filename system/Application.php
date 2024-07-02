@@ -4,31 +4,28 @@ declare(strict_types=1);
 
 namespace System;
 
-use League\Container\Container;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use System\Core\Router\Interfaces\RouterInterface;
+use System\Core\Http\RequestHandlerInterface;
+use System\Core\Session\Session;
 
 class Application
 {
     public function __construct(
-        private readonly RouterInterface $router,
-        private Request $request,
-        private readonly Response $response,
-        private readonly Container $container,
+        private Request                          $request,
+        private readonly RequestHandlerInterface $handler,
+        private readonly Session $session
     ) {
         $this->request = Request::createFromGlobals();
     }
 
     public function handle(): void
     {
-        $params = $this->router->match($this->request->getPathInfo(), $this->request->getMethod());
+        $this->handler->handle($this->request);
+        $this->terminate();
+    }
 
-        $controller = $this->container->get($params['handler']);
-        $action = $params['action'];
-        $content = $controller->$action();
-
-        $statusCode = $this->response->getStatusCode();
-        $this->response->setContent($content)->setStatusCode($statusCode)->send();
+    private function terminate(): void
+    {
+        $this->session->clearFlash();
     }
 }

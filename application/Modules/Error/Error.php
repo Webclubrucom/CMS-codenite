@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Application\Modules\Error;
 
-use System\Abstracts\AbstractController;
+use System\Core\Abstracts\AbstractController;
 
 final class Error extends AbstractController
 {

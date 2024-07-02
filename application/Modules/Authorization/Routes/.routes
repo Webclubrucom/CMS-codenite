@@ -1,0 +1,4 @@
+Route::get('/login', 'LoginController@index');
+Route::post('/login/auth', 'LoginController@auth');
+Route::get('/register', 'RegisterController@index');
+Route::post('/register/auth', 'RegisterController@auth');

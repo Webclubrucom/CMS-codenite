@@ -12,7 +12,6 @@ class CheckRoute
 
     public function __construct(string $routes)
     {
-
         $this->availabilityRoute($routes);
     }
 
@@ -28,7 +27,7 @@ class CheckRoute
     private function creatingRoute(string $routes): void
     {
         if (is_dir(BASE_DIR.'/application/Modules')) {
-            $file_content_start = '<?php'.PHP_EOL.PHP_EOL.'use System\Core\Router\Facades\Route;'.PHP_EOL.PHP_EOL.'return [';
+            $file_content_start = '<?php'.PHP_EOL.PHP_EOL.'use System\Core\Helpers\Route;'.PHP_EOL.PHP_EOL.'return [';
             $file_content = '';
             $file_content_end = PHP_EOL.'];';
             $arrRoutes = $this->recursiveGlob(BASE_DIR.'/application/.routes');

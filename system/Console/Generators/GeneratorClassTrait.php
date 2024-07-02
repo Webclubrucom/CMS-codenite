@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace System\Console\Generators;
 
-use League\Container\Container;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -15,8 +14,8 @@ trait GeneratorClassTrait
     private string $namespace = 'namespace Application';
 
     private array $types = [
-        'Controller' => 'System\\Abstracts\\AbstractController',
-        'Handler' => 'System\\Abstracts\\AbstractController',
+        'Controller' => 'System\\Core\\Abstracts\\AbstractController',
+        'Handler' => 'System\\Core\\Abstracts\\AbstractController',
         'Service' => 'System\\Abstracts\\AbstractService',
         'Model' => 'System\\Abstracts\\AbstractModel',
         'Event' => 'System\\Abstracts\\AbstractEvent',
@@ -28,8 +27,8 @@ trait GeneratorClassTrait
     ];
 
     private array $intersect = [
-        'Controller' => 'System\\Abstracts\\AbstractController',
-        'Handler' => 'System\\Abstracts\\AbstractController',
+        'Controller' => 'System\\Core\\Abstracts\\AbstractController',
+        'Handler' => 'System\\Core\\Abstracts\\AbstractController',
         'Service' => 'System\\Abstracts\\AbstractService',
         'Model' => 'System\\Abstracts\\AbstractModel',
     ];

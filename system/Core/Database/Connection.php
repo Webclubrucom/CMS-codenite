@@ -22,7 +22,8 @@ class Connection
             'host' => Config::get('DB_HOST'),
             'driver' => Config::get('DB_CONNECTION'),
             'port' => Config::get('DB_PORT'),
-            'charset ' => Config::get('DB_CHARSET'),
+            'charset' => Config::get('DB_CHARSET'),
+            'collation' => Config::get('DB_COLLATION'),
         ];
 
     }

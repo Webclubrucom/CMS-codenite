@@ -40,6 +40,7 @@ class SearchClass
     {
         $out = [];
         foreach (glob($path.'/*') as $file) {
+
             if (is_dir($file)) {
                 $out = array_merge($out, self::globClasses($file));
             } else {

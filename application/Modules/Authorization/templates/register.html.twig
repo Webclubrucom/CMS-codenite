@@ -1,0 +1,47 @@
+{% extends '/themes/frontend/Landrick/index-full.html.twig' %}
+
+{% block content %}
+    <section class="bg-home d-flex align-items-center position-relative" style="background: url('images/shape01.png') center;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-signin p-4 bg-white rounded shadow">
+                        <form>
+                            <a href="/"><img src="/application/themes/frontend/Landrick/assets/images/logo-icon.png" class="avatar avatar-small mb-4 d-block mx-auto" alt=""></a>
+                            <h5 class="mb-3 text-center">Зарегистрируйте свой аккаунт</h5>
+
+                            <div class="form-floating mb-2">
+                                <input type="text" name="firstname" class="form-control" id="firstname" placeholder="Ввеите ваше имя">
+                                <label for="firstname">Имя</label>
+                            </div>
+
+                            <div class="form-floating mb-2">
+                                <input type="email" name="email" class="form-control" id="email" placeholder="name@example.com">
+                                <label for="email">Email адрес</label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input type="password" name="password" class="form-control" id="password" placeholder="Введите пароль">
+                                <label for="password">Пароль</label>
+                            </div>
+
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" value="" id="accept">
+                                <label class="form-check-label" for="accept">Я принимаю <a href="#" class="text-primary">правила и условия</a></label>
+                            </div>
+
+                            <button class="btn btn-primary w-100" type="submit">Зарегистрироваться</button>
+
+                            <div class="col-12 text-center mt-3">
+                                <p class="mb-0 mt-3"><small class="text-dark me-2">У вас уже есть аккаунт ?</small> <a href="/login" class="text-dark fw-bold">Вход</a></p>
+                            </div><!--end col-->
+
+                            <p class="mb-0 text-muted mt-3 text-center">© <script>document.write(new Date().getFullYear())</script> Landrick.</p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

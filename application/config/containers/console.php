@@ -6,6 +6,7 @@ use League\Container\Container;
 use League\Container\ReflectionContainer;
 use System\Console\Commands\MigrateCommand;
 use System\Console\Console;
+use System\Console\Migrate;
 use System\Core\Database\Connection;
 use System\Core\Helpers\Config;
 
@@ -21,7 +22,6 @@ $container->addShared('db', concrete: function () use ($container): Dbal {
 });
 
 $container->add(MigrateCommand::class)
-    ->addArgument('db')
-    ->addArgument(new StringArgument(Config::get('PATH_MIGRATIONS')));
+    ->addArgument('db');
 
 return $container;
