@@ -88,28 +88,27 @@ class MigrateCommand extends Command
                 $progressBar->setFormat('custom');
                 $progressBar->setBarCharacter('<comment>-</comment>');
                 $progressBar->setBarWidth(2000);
-                $progressBar->setMessage('Выполняется');
+                $progressBar->setMessage('Запуск');
                 $progressBar->setMessage('0','time');
                 $progressBar->setMessage(str_replace('.php', '', $migration), 'filename');
                 $progressBar->start();
 
                 if ($sqlArray) {
                     $index = count($sqlArray) - 1;
-                    if ($this->connection->executeQuery($sqlArray[$index])) {
-                        for ($i = 0; $i < 100; $i++) {
-                            $progressBar->advance();
-                        }
-                    }
+                    $progressBar->setMessage('<fg=yellow>Выполняется</>');
 
+                    $time = microtime(true) - $start;
+                    $time = (string)floor($time * 1000);
+                    $progressBar->setMessage($time.'ms','time');
+                    $progressBar->advance();
+                    $this->connection->executeQuery($sqlArray[$index]);
                 }
 
                 $progressBar->setMessage('<info>Завершено</info>');
                 $time = microtime(true) - $start;
                 $time = (string)floor($time * 1000);
-
                 $progressBar->setMessage($time.'ms','time');
                 $progressBar->finish();
-
             }
             $io->newLine(3);
             return Command::SUCCESS;
